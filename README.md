@@ -1,4 +1,4 @@
-# grunt-glsl
+# grunt-glsl [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl)
 
 > Translate GLSL shader files into javascript.
 
