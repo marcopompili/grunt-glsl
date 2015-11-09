@@ -120,4 +120,4 @@ using [Grunt](http://gruntjs.com/).
 
 ## Release History
 
-*   2015-11-09   v0.1.0   Work in progress somewhat working.
+*   2015-11-09   v0.1.1   Work in progress somewhat working.
