@@ -3,7 +3,7 @@
   "description": "Translate GLSL shader files into javascript.",
   "version": "0.1.1",
   "license": "MIT",
-  "homepage": "https://github.com/marcs/grunt-glsl",
+  "homepage": "https://github.com/marcopompili/grunt-glsl",
   "author": {
     "name": "Marco Pompili",
     "email": "marcs.pompili@gmail.com",
