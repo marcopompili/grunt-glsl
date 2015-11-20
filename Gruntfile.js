@@ -34,13 +34,21 @@ module.exports = function(grunt) {
           'tmp/default_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
         }
       },
-      custom_options: {
+      dev_options: {
         options: {
-          lineEndings: '\n',
-          oneString: true
+          stripComments: true
         },
         files: {
-          'tmp/custom_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/dev_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+        }
+      },
+      dist_options: {
+        options: {
+          oneString: true,
+          stripComments: true
+        },
+        files: {
+          'tmp/dist_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
         }
       }
     },

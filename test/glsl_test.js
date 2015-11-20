@@ -40,11 +40,20 @@ exports.glsl = {
 
     test.done();
   },
-  custom_options: function(test) {
+  dev_options: function(test) {
     test.expect(1);
 
-    var actual = getNormalizedFile('tmp/custom_options.js');
-    var expected = getNormalizedFile('test/expected/custom_options.js');
+    var actual = getNormalizedFile('tmp/dev_options.js');
+    var expected = getNormalizedFile('test/expected/dev_options.js');
+    test.equal(actual, expected, 'Array made of source lines.');
+
+    test.done();
+  },
+  dist_options: function(test) {
+    test.expect(1);
+
+    var actual = getNormalizedFile('tmp/dist_options.js');
+    var expected = getNormalizedFile('test/expected/dist_options.js');
     test.equal(actual, expected, 'String containing the whole source code.');
 
     test.done();

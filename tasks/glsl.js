@@ -53,6 +53,13 @@ module.exports = function(grunt) {
         shaderArrSrc.splice(i, 1);
   }
 
+  function stripComments(shaderArrSrc)
+  {
+    for(var i = 0; i < shaderArrSrc.length; i++)
+      if(shaderArrSrc[i].trim().substring(0, 2) == '//')
+        shaderArrSrc.splice(i, 1);
+  }
+
   grunt.registerMultiTask('glsl', 'Translate shader files to javascript strings.', function() {
 
     var jsOutput = "";
@@ -62,7 +69,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       lineEndings: isWin ? "\r\n" : "\n",
-      includeComments: true,
+      stripComments: false,
       oneString: false
     });
 
@@ -91,7 +98,10 @@ module.exports = function(grunt) {
         var shaderName = gljs.varname;
         var i, l;
 
-        if(options.oneString) {
+        if(options.stripComments)
+          stripComments(shaderArrSrc);
+
+        if(options.oneString) {      
 
           jsOutput += 'var ' + shaderName + ' = "';
 
