@@ -6,8 +6,6 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
-
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -33,7 +31,7 @@ module.exports = function(grunt) {
       default_options: {
         options: { },
         files: {
-          'tmp/default_options': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/default_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
         }
       },
       custom_options: {
@@ -42,15 +40,15 @@ module.exports = function(grunt) {
           oneString: true
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/custom_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
         }
       }
     },
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*_test.js']
-    }
+      tests: ['test/*_test.js'],
+    },
 
   });
 

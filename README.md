@@ -2,7 +2,49 @@
 
 > Translate GLSL shader files into javascript.
 
-## Getting Started
+## Setting up your GLSL source files
+
+First you have to set the headers for grunt-glsl in your shader files.
+
+For example a vertex shader file called vx.glsl:
+
+```glsl
+//#gljs varname: 'vertex_shader_src'
+
+varying vec3 vertex;
+void main() {
+  vertex = vec3(position.x * 3.0, position.y * 6.0, position.z * 3.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
+}
+```
+
+Then a fragment shader file called fx.glsl:
+
+```glsl
+//#gljs varname: 'fragment_shader_src'
+
+#extension GL_OES_standard_derivatives : enable
+varying vec3 vertex;
+void main() {
+  // Pick a coordinate to visualize in a grid
+  vec2 coord = vertex.xz;
+
+  // Compute anti-aliased world-space grid lines
+  vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);
+  float line = min(grid.x, grid.y);
+
+  // Just visualize the grid lines directly
+  gl_FragColor = vec4(vec3(1.0 - min(line, 1.0)) * vec3(0.0, 0.2, 0.22), 1.0);
+}
+```
+
+The top header is basically CSON, apart from the first 5 characters that
+identify that the comment line is a header for grunt-glsl.
+
+The key 'varname' carries the value of the variable name for the javascript
+file.
+
+## Getting Started with Grunt
 
 This plugin requires Grunt `~0.4.5`
 
@@ -27,21 +69,20 @@ grunt.loadNpmTasks('grunt-glsl');
 
 ### Overview
 
+Will use the two shader files above in these examples.
+
 In your project's Gruntfile, add a section named `glsl` to the data
 object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
   glsl: {
-    options: {
-      lineEndings: '\n',
-    },
     dev: {
       options: {
         oneString: false
       }
       files: {
-        'shaders.js': ['shader.vert', 'shader.frag', 'shader.vx.glsl' ]
+        'shaders.js': ['vx.glsl', 'fx.glsl' ]
       }
     }
     dist: {
@@ -49,11 +90,43 @@ grunt.initConfig({
         oneString: true
       }
       files: {
-        'shaders.js': ['shader.vert', 'shader.frag', 'shader.vx.glsl' ]
+        'shaders.js': ['vx.glsl', 'fx.glsl' ]
       }
     },
   },
 });
+```
+
+Result for the glsl:dev task:
+
+```javascript
+var vertex_shader_src = [
+'varying vec3 vertex;',
+'void main() {',
+'  vertex = vec3(position.x * 3.0, position.y * 6.0, position.z * 3.0);',
+'  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);',
+'}',
+].join("\n");
+var fragment_shader_src = [
+'#extension GL_OES_standard_derivatives : enable',
+'varying vec3 vertex;',
+'void main() {',
+'  // Pick a coordinate to visualize in a grid',
+'  vec2 coord = vertex.xz;',
+'  // Compute anti-aliased world-space grid lines',
+'  vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);',
+'  float line = min(grid.x, grid.y);',
+'  // Just visualize the grid lines directly',
+'  gl_FragColor = vec4(vec3(1.0 - min(line, 1.0)) * vec3(0.0, 0.2, 0.22), 1.0);',
+'}',
+].join("\n");
+```
+
+Result for the glsl:dist task:
+
+```javascript
+var vertex_shader_src = "varying vec3 vertex;\nvoid main() {\n  vertex = vec3(position.x * 3.0, position.y * 6.0, position.z * 3.0);\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);\n}\n";
+var fragment_shader_src = "#extension GL_OES_standard_derivatives : enable\nvarying vec3 vertex;\nvoid main() {\n  // Pick a coordinate to visualize in a grid\n  vec2 coord = vertex.xz;\n  // Compute anti-aliased world-space grid lines\n  vec2 grid = abs(fract(coord - 0.5) - 0.5) / fwidth(coord);\n  float line = min(grid.x, grid.y);\n  // Just visualize the grid lines directly\n  gl_FragColor = vec4(vec3(1.0 - min(line, 1.0)) * vec3(0.0, 0.2, 0.22), 1.0);\n}\n";
 ```
 
 ### Options
@@ -120,4 +193,6 @@ using [Grunt](http://gruntjs.com/).
 
 ## Release History
 
-*   2015-11-09   v0.1.1   Work in progress somewhat working.
+*   2015-11-09   v0.1.1    Work in progress somewhat working, lacks good docs.
+*   2015-11-20   v0.1.21   Fixed repository's infos.
+*   2015-11-20   v0.1.3    Better docs, bug fixes, real life test files.
