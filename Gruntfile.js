@@ -6,6 +6,8 @@
  * Licensed under the MIT license.
  */
 
+'use strict';
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -31,7 +33,7 @@ module.exports = function(grunt) {
       default_options: {
         options: { },
         files: {
-          'tmp/default_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/default_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
         }
       },
       dev_options: {
@@ -39,7 +41,7 @@ module.exports = function(grunt) {
           stripComments: true
         },
         files: {
-          'tmp/dev_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/dev_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
         }
       },
       dist_options: {
@@ -48,7 +50,20 @@ module.exports = function(grunt) {
           stripComments: true
         },
         files: {
-          'tmp/dist_options.js': ['test/fixtures/vx.glsl', 'test/fixtures/fx.glsl']
+          'tmp/dist_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
+        }
+      },
+      glsl_options: {
+        options: {
+          stripComments: true,
+          optimize: true,
+          target: 'es3' //default is 'es3', target also accept 'es2'
+        },
+        files: {
+          'tmp/glsl_options.js': [
+            'test/fixtures/glsl120-basic-in.frag',
+            'test/fixtures/glsl120-basic-out.frag'
+          ]
         }
       }
     },

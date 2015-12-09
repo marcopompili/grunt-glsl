@@ -185,6 +185,33 @@ grunt.initConfig({
 });
 ```
 
+#### Using glslOptimizer
+
+From release 0.2.0 glslOptimizer support has been added.
+I had to prepare a [custom fork](https://www.npmjs.com/package/marcs-glsl-optimizer) from
+the original
+[glslOptimizer](https://github.com/aras-p/glsl-optimizer)
+by Aras Pranckevičius. Maybe the fork stil needs some fixing,
+but should mostly work fine.
+
+Here an example of how to use the optimizer in a task:
+
+```js
+glsl_options: {
+  options: {
+    stripComments: true,
+    optimize: true,
+    target: 'es3' //default is 'es3', target also accept 'es2'
+  },
+  files: {
+    'tmp/glsl_options.js': [
+      'test/fixtures/glsl120-basic-in.frag',
+      'test/fixtures/glsl120-basic-out.frag'
+    ]
+  }
+}
+```
+
 ## Contributing
 
 In lieu of a formal styleguide, take care to maintain the existing coding style.
@@ -194,5 +221,6 @@ using [Grunt](http://gruntjs.com/).
 ## Release History
 
 *   2015-11-09   v0.1.1    Work in progress somewhat working, lacks good docs.
-*   2015-11-20   v0.1.21   Fixed repository's infos.
-*   2015-11-20   v0.1.3    Better docs, bug fixes, real life test files.
+*   2015-11-20   v0.1.21   Fixed repository's infos.
+*   2015-11-20   v0.1.3    Better docs, bug fixes, real life test files.
+*   2015-12-12   v0.2.0    Support for glslOptimizer

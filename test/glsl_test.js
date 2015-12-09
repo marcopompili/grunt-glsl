@@ -58,4 +58,13 @@ exports.glsl = {
 
     test.done();
   },
+  glsl_options: function(test) {
+    test.expect(1);
+
+    var actual = getNormalizedFile('tmp/glsl_options.js');
+    var expected = getNormalizedFile('test/expected/glsl_options.js');
+    test.equal(actual, expected, 'Test using glslOptimizer by Aras Pranckevičius.');
+
+    test.done();
+  },
 };

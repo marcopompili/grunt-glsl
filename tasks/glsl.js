@@ -5,10 +5,12 @@
  * Copyright (c) 2015 Marco Pompili
  * Licensed under the MIT license.
  */
+
 'use strict';
 
 var os = require('os');
 var cson = require('cson');
+var glslOptimizer = require("marcs-glsl-optimizer");
 
 if (typeof String.prototype.startsWith != 'function')
 {
@@ -60,6 +62,19 @@ module.exports = function(grunt) {
         shaderArrSrc.splice(i, 1);
   }
 
+  function optimize(compiler, name, type, source) {
+    var shader = new glslOptimizer.Shader(compiler, type, source);
+
+    if (!shader.compiled()) {
+      throw new Error("Failed to optimize " + name + " shader");
+    }
+
+    var output = shader.output();
+    shader.dispose();
+
+    return output;
+  }
+
   grunt.registerMultiTask('glsl', 'Translate shader files to javascript strings.', function() {
 
     var jsOutput = "";
@@ -70,8 +85,27 @@ module.exports = function(grunt) {
     var options = this.options({
       lineEndings: isWin ? "\r\n" : "\n",
       stripComments: false,
+      optimize: false,
+      target: 'es3',
       oneString: false
     });
+
+    var compiler;
+
+    if(optimize)
+    {
+      switch (options.target)
+      {
+        case 'es2':
+           compiler = new glslOptimizer.Compiler(glslOptimizer.TARGET_OPENGLES20);
+          break;
+        case 'es3':
+           compiler = new glslOptimizer.Compiler(glslOptimizer.TARGET_OPENGLES30);
+          break;
+        default:
+        break;
+      }
+    }
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
@@ -96,12 +130,40 @@ module.exports = function(grunt) {
 
         var gljs = cson.parse(directives.join('\n'));
         var shaderName = gljs.varname;
+        var shaderType = gljs.type;
         var i, l;
 
+        // Remove comments
         if(options.stripComments)
           stripComments(shaderArrSrc);
 
-        if(options.oneString) {      
+        // Call the glsl-optimizer
+        if(options.optimize) {
+
+          var type;
+
+          switch (shaderType) {
+            case 'vertex':
+              type = glslOptimizer.VERTEX_SHADER;
+              break;
+            case 'fragment':
+              type = glslOptimizer.FRAGMENT_SHADER;
+              break;
+            default:
+              type = false;
+              break;
+          }
+
+          if(type) {
+            src = optimize(compiler, shaderName, type, shaderArrSrc.join('\n'));
+            shaderArrSrc = src.split(options.lineEndings);
+          }
+          else {
+            grunt.log.warn('Cannot optimize shader, undefined type.');
+          }
+        }
+
+        if(options.oneString) {
 
           jsOutput += 'var ' + shaderName + ' = "';
 
@@ -128,5 +190,9 @@ module.exports = function(grunt) {
       // Print a success message.
       grunt.log.writeln('File "' + f.dest + '" created.');
     });
+
+    // dispose glslOptimizer compiler
+    if(compiler)
+      compiler.dispose();
   });
 };
