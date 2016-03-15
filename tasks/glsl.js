@@ -6,8 +6,6 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
-
 var os = require('os');
 var cson = require('cson');
 var glslOptimizer = require("marcs-glsl-optimizer");
@@ -20,8 +18,9 @@ if (typeof String.prototype.startsWith != 'function')
   };
 }
 
-module.exports = function(grunt) {
-
+module.exports = function(grunt)
+{
+  "use strict";
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
@@ -62,7 +61,8 @@ module.exports = function(grunt) {
         shaderArrSrc.splice(i, 1);
   }
 
-  function optimize(compiler, name, type, source) {
+  function optimize(compiler, name, type, source)
+  {
     var shader = new glslOptimizer.Shader(compiler, type, source);
 
     if (!shader.compiled()) {
