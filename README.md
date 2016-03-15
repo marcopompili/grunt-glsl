@@ -41,8 +41,19 @@ void main() {
 The top header is basically CSON, apart from the first 5 characters that
 identify that the comment line is a header for grunt-glsl.
 
-The key 'varname' carries the value of the variable name for the javascript
-file.
+The key 'varname' carries the value of the variable name for the
+javascript file.
+
+### From version 0.3.0
+
+If the key varname is not given, then the task tries to
+sanitize the shader filename and use it as a variable name.
+
+For example: the filename test1_fx.glsl will become:
+
+```js
+var test1_fx_glsl = [...];
+```
 
 ## Getting Started with Grunt
 
@@ -191,10 +202,10 @@ From release 0.2.0 glslOptimizer support has been added.
 I had to prepare a [custom fork](https://www.npmjs.com/package/marcs-glsl-optimizer) from
 the original
 [glslOptimizer](https://github.com/aras-p/glsl-optimizer)
-by Aras Pranckevičius. Maybe the fork stil needs some fixing,
+by Aras Pranckevičius. Maybe my fork stil needs some fixing,
 but should mostly work fine.
 
-A glsl source file with the necessary GLSL optimization tags:
+A glsl source file with the mandatory optimization tags:
 
 ```glsl
 //#gljs varname: 'glsl120_basic_in', type: 'fragment'
@@ -226,7 +237,7 @@ void main()
 }
 ```
 
-The **type** attribute is necessary for successful optimization,
+The **type** attribute is mandatory for successful optimization,
 type can have two values:
 
 *   vertex: for vertex shaders.
@@ -239,7 +250,7 @@ glsl_options: {
   options: {
     stripComments: true,
     optimize: true,
-    target: 'es3' //default is 'es3', target also accept 'es2'
+    target: 'es3' //default is 'es2', target also accept 'es3'
   },
   files: {
     'tmp/glsl_options.js': [
@@ -259,6 +270,7 @@ using [Grunt](http://gruntjs.com/).
 ## Release History
 
 *   2015-11-09   v0.1.1    Work in progress somewhat working, lacks good docs.
-*   2015-11-20   v0.1.21   Fixed repository's infos.
+*   2015-11-20   v0.1.21   Fix repository's infos.
 *   2015-11-20   v0.1.3    Better docs, bug fixes, real life test files.
 *   2015-12-12   v0.2.0    Support for glslOptimizer
+*   2016-03-15   v0.3.0    Filenames can be used as varnames.  
