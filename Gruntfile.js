@@ -8,7 +8,7 @@
 
 module.exports = function(grunt) {
   "use strict";
-  
+
   // Project configuration.
   grunt.initConfig({
     jshint: {
@@ -56,12 +56,23 @@ module.exports = function(grunt) {
         options: {
           stripComments: true,
           optimize: true,
-          target: 'es3' //default is 'es3', target also accept 'es2'
+          target: 'es3' //default is 'es2', target also accept 'es3'
         },
         files: {
           'tmp/glsl_options.js': [
             'test/fixtures/glsl120-basic-in.frag',
             'test/fixtures/glsl120-basic-out.frag'
+          ]
+        }
+      },
+      zun_toon_test: {
+        options: {
+          optimize: true
+        },
+        files: {
+          'tmp/zun_toon.js' : [
+            'test/fixtures/zun-toon.vx.glsl',
+            'test/fixtures/zun-toon.fx.glsl',
           ]
         }
       }

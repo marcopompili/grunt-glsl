@@ -65,4 +65,13 @@ exports.glsl = {
 
     test.done();
   },
+  zun_toon_test: function(test) {
+    test.expect(1);
+
+    var actual = getNormalizedFile('tmp/zun_toon.js');
+    var expected = getNormalizedFile('test/expected/zun_toon.js');
+    test.equal(actual, expected, 'Test with dotted naming.');
+
+    test.done();
+  }
 };

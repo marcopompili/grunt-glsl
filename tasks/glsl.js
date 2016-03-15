@@ -26,6 +26,13 @@ module.exports = function(grunt)
 
   var directiveTag = "//#gljs";
 
+  function sanitizedFilename(filepath)
+  {
+    var leaf = filepath.split('\\').pop().split('/').pop();
+
+    return leaf.replace(/[^a-z0-9_]/gi, '_');
+  }
+
   function stripDirectives(shaderArrSrc)
   {
     var directives = [];
@@ -132,6 +139,12 @@ module.exports = function(grunt)
         var shaderName = gljs.varname;
         var shaderType = gljs.type;
         var i, l;
+
+        if(!shaderName) {
+          shaderName = sanitizedFilename(filepath);
+
+          grunt.log.ok('Cannot find a valid variable name, using sanitzed filename.');
+        }
 
         // Remove comments
         if(options.stripComments)
