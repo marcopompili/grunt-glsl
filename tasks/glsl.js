@@ -86,7 +86,7 @@ module.exports = function(grunt)
       lineEndings: isWin ? "\r\n" : "\n",
       stripComments: false,
       optimize: false,
-      target: 'es3',
+      target: 'es2',
       oneString: false
     });
 
