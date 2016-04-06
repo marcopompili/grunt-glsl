@@ -2,6 +2,8 @@
 
 > Translate GLSL shader files into javascript.
 
+[![NPM](https://nodei.co/npm/grunt-glsl.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/grunt-glsl/) [![NPM](https://nodei.co/npm-dl/grunt-glsl.png?months=3&height=3)](https://nodei.co/npm/grunt-glsl/)
+
 ## Setting up your GLSL source files
 
 First you have to set the headers for grunt-glsl in your shader files.
