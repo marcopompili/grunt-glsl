@@ -1,4 +1,4 @@
-# grunt-glsl [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl) ![dependencies](https://david-dm.org/marcopompili/grunt-glsl.svg) ![version](https://img.shields.io/npm/v/grunt-glsl.svg) ![downloads](https://img.shields.io/npm/dt/grunt-glsl.svg)
+# grunt-glsl [![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl) ![dependencies](https://david-dm.org/marcopompili/grunt-glsl.svg) ![version](https://img.shields.io/npm/v/grunt-glsl.svg) ![downloads](https://img.shields.io/npm/dt/grunt-glsl.svg)
 
 > Translate GLSL shader files into javascript.
 
@@ -276,3 +276,5 @@ using [Grunt](http://gruntjs.com/).
 *   2015-11-20   v0.1.3    Better docs, bug fixes, real life test files.
 *   2015-12-12   v0.2.0    Support for glslOptimizer
 *   2016-03-15   v0.3.0    Filenames can be used as varnames.  
+
+[paypal-donations]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZCEWXHNPK8JXN
