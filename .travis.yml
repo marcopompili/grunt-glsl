@@ -3,9 +3,10 @@ before_install: npm install grunt-cli
 sudo: false
 language: node_js
 node_js:
+  - '8'
+  - '6'
   - '5'
   - '4'
-  - '0.12'
 env:
   - CXX=g++-4.8
 addons:

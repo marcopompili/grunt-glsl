@@ -1,4 +1,4 @@
-//#gljs varname: 'grid_fragment_src'
+//#gljs varname: grid_fragment_src
 
 #extension GL_OES_standard_derivatives : enable
 varying vec3 vertex;

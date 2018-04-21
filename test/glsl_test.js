@@ -32,17 +32,17 @@ exports.glsl = {
   default_options: function(test) {
     test.expect(1);
 
-    var actual = getNormalizedFile('tmp/default_options.js');
-    var expected = getNormalizedFile('test/expected/default_options.js');
-    test.equal(actual, expected, 'Array made of source lines.');
+    const actual = getNormalizedFile('tmp/default_options.js');
+    const expected = getNormalizedFile('test/expected/default_options.js');
+    test.equal(actual, expected, 'Testing default options.')
 
     test.done();
   },
   dev_options: function(test) {
     test.expect(1);
 
-    var actual = getNormalizedFile('tmp/dev_options.js');
-    var expected = getNormalizedFile('test/expected/dev_options.js');
+    const actual = getNormalizedFile('tmp/dev_options.js');
+    const expected = getNormalizedFile('test/expected/dev_options.js');
     test.equal(actual, expected, 'Array made of source lines.');
 
     test.done();
@@ -50,27 +50,9 @@ exports.glsl = {
   dist_options: function(test) {
     test.expect(1);
 
-    var actual = getNormalizedFile('tmp/dist_options.js');
-    var expected = getNormalizedFile('test/expected/dist_options.js');
+    const actual = getNormalizedFile('tmp/dist_options.js');
+    const expected = getNormalizedFile('test/expected/dist_options.js');
     test.equal(actual, expected, 'String containing the whole source code.');
-
-    test.done();
-  },
-  glsl_options: function(test) {
-    test.expect(1);
-
-    var actual = getNormalizedFile('tmp/glsl_options.js');
-    var expected = getNormalizedFile('test/expected/glsl_options.js');
-    test.equal(actual, expected, 'Test using glslOptimizer by Aras Pranckevičius.');
-
-    test.done();
-  },
-  zun_toon_test: function(test) {
-    test.expect(1);
-
-    var actual = getNormalizedFile('tmp/zun_toon.js');
-    var expected = getNormalizedFile('test/expected/zun_toon.js');
-    test.equal(actual, expected, 'Test with dotted naming.');
 
     test.done();
   }

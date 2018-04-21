@@ -1,13 +1,13 @@
 /*
  * grunt-glsl
- * https://github.com/marcs/grunt-glsl
+ * https://github.com/marcopompili/grunt-glsl
  *
- * Copyright (c) 2015 Marco Pompili
+ * Copyright (c) 2018 Marco Pompili
  * Licensed under the MIT license.
  */
+'use strict';
 
-module.exports = function(grunt) {
-  "use strict";
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     glsl: {
       default_options: {
-        options: { },
+        options: {},
         files: {
           'tmp/default_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
         }
@@ -45,35 +45,12 @@ module.exports = function(grunt) {
       },
       dist_options: {
         options: {
-          oneString: true,
-          stripComments: true
+          trim: true,
+          stripComments: true,
+          oneString: true
         },
         files: {
           'tmp/dist_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
-        }
-      },
-      glsl_options: {
-        options: {
-          stripComments: true,
-          optimize: true,
-          target: 'es3' //default is 'es2', target also accept 'es3'
-        },
-        files: {
-          'tmp/glsl_options.js': [
-            'test/fixtures/glsl120-basic-in.frag',
-            'test/fixtures/glsl120-basic-out.frag'
-          ]
-        }
-      },
-      zun_toon_test: {
-        options: {
-          optimize: true
-        },
-        files: {
-          'tmp/zun_toon.js' : [
-            'test/fixtures/zun-toon.vx.glsl',
-            'test/fixtures/zun-toon.fx.glsl',
-          ]
         }
       }
     },

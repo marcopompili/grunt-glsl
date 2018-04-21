@@ -1,4 +1,4 @@
-//#gljs varname: 'vertex_shader_src'
+//#gljs varname: vertex_shader_src
 
 varying vec3 vertex;
 void main() {
