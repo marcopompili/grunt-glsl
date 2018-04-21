@@ -9,6 +9,7 @@
 const os = require('os')
 const directiveTag = "//#gljs"
 const inlineCommentPattern = /\/\/.*\n*/
+const headerCheck = /\s*\w+:\s*\w+,?/
 
 if (typeof String.prototype.startsWith != 'function') {
   String.prototype.startsWith = function (str) {
@@ -22,11 +23,23 @@ function sanitizedFilename(filepath) {
     .replace(/[^a-z0-9_]/gi, '_')
 }
 
-function parseDirectives(directiveHeader) {
-  const directiveArray = directiveHeader.substring(directiveTag.length, directiveHeader.length).split(',')
+function checkHeader(header) {
+  if (!header.startsWith(directiveTag))
+    return false
+
+  const header = header.substring(directiveTag.length, header.length)
+
+  if (!headerCheck.test(header))
+    return false
+
+  return true
+}
+
+function parseHeader(header) {
+  const headerArray = header.substring(directiveTag.length, header.length).split(',')
   var gljs = {}
 
-  directiveArray.forEach(element => {
+  headerArray.forEach(element => {
     s = element.split(':').map(v => v.trim())
     gljs[s[0]] = s[1]
   })
@@ -43,7 +56,7 @@ module.exports = function (grunt) {
 
     // Output container
     var jsOutput = ''
-
+    
     // Windows flag
     const isWin = /^win/.test(os.platform())
 
@@ -74,46 +87,51 @@ module.exports = function (grunt) {
       }).map(filepath => {
 
         // Read file source.
-        const src = grunt.util.normalizelf(grunt.file.read(filepath))
+        const src = grunt.util.normalizelf(grunt.file.read(filepath)).trim()
 
-        // Split source into array
-        var shaderArrSrc = src.split(options.lineEndings)
+        if (src) {
+          // Split source into array
+          var shaderArrSrc = src.split(options.lineEndings)
 
-        // Trim lines
-        if (options.trim)
-          shaderArrSrc = shaderArrSrc.map(line => line.trim())
+          // Trim lines
+          if (options.trim)
+            shaderArrSrc = shaderArrSrc.map(line => line.trim())
 
-        // Strip empty lines
-        shaderArrSrc = shaderArrSrc.filter(line => line)
+          // Strip empty lines
+          shaderArrSrc = shaderArrSrc.filter(line => line)
 
-        // Parse directive string into obj
-        const gljs = parseDirectives(shaderArrSrc[0])
-        const shaderName = gljs.varname
-        const shaderType = gljs.type
+          if (!headerCheck.test(shaderArrSrc[0]))
+            grunt.log.error('Source has an invalid header!')
 
-        // Strip directives for grunt-glsl
-        shaderArrSrc = shaderArrSrc.filter(line => !line.startsWith(directiveTag))
+          // Parse directive string into obj
+          const gljs = parseHeader(shaderArrSrc[0])
+          var shaderName = gljs.varname
+          var shaderType = gljs.type
 
-        // If no shader name is given then sanitize filename
-        if (!shaderName) {
-          shaderName = sanitizedFilename(filepath)
-          grunt.log.ok(`Cannot find a valid variable name, using sanitzed filename: ${shaderName}`)
-        }
+          // Strip directives for grunt-glsl
+          shaderArrSrc = shaderArrSrc.filter(line => !line.startsWith(directiveTag))
 
-        // Remove comments
-        if (options.stripComments)
-          shaderArrSrc = shaderArrSrc.filter(line => !inlineCommentPattern.test(line))
+          // If no shader name is given then sanitize filename
+          if (!shaderName) {
+            shaderName = sanitizedFilename(filepath)
+            grunt.log.ok(`Cannot find a valid variable name, using sanitzed filename: ${shaderName}`)
+          }
 
-        // Oneline source
-        if (options.oneString) {
-          jsOutput += `const ${shaderName} = '`
-          jsOutput += shaderArrSrc.join('\\n')
-          jsOutput += "';\n"
-        // Arrary of strings (more readable)
-        } else {
-          jsOutput += `const ${shaderName} = [`
-          jsOutput += shaderArrSrc.map(l => `\n'${l}'`).join(',')
-          jsOutput += "].join('\\n');\n"
+          // Remove comments
+          if (options.stripComments)
+            shaderArrSrc = shaderArrSrc.filter(line => !inlineCommentPattern.test(line))
+
+          // Oneline source
+          if (options.oneString) {
+            jsOutput += `const ${shaderName} = '`
+            jsOutput += shaderArrSrc.join('\\n')
+            jsOutput += "';\n"
+          // Arrary of strings (more readable)
+          } else {
+            jsOutput += `const ${shaderName} = [`
+            jsOutput += shaderArrSrc.map(l => `\n'${l}'`).join(',')
+            jsOutput += "].join('\\n');\n"
+          }
         }
       }).join('\n')
 

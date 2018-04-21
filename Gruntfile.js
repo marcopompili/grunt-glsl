@@ -52,6 +52,12 @@ module.exports = function (grunt) {
         files: {
           'tmp/dist_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
         }
+      },
+      empty_file: {
+        options: {},
+        files: {
+          'tmp/empty_file.js': ['test/fixtures/empty.glsl']
+        }
       }
     },
 
