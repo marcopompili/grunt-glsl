@@ -32,7 +32,7 @@ module.exports = function (grunt) {
       default_options: {
         options: {},
         files: {
-          'tmp/default_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
+          'tmp/default_options.js': ['test/fixtures/grid.vert', 'test/fixtures/grid.frag']
         }
       },
       dev_options: {
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
           stripComments: true
         },
         files: {
-          'tmp/dev_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
+          'tmp/dev_options.js': ['test/fixtures/grid.vert', 'test/fixtures/grid.frag']
         }
       },
       dist_options: {
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
           oneString: true
         },
         files: {
-          'tmp/dist_options.js': ['test/fixtures/grid.vert.glsl', 'test/fixtures/grid.frag.glsl']
+          'tmp/dist_options.js': ['test/fixtures/grid.vert', 'test/fixtures/grid.frag']
         }
       },
       empty_file: {
