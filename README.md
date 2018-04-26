@@ -189,6 +189,7 @@ Add unit tests for any new or changed functionality. Lint and test your code
 using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2018-04-26 *v0.4.1*: Fix package dependencies.
 * 2018-04-20 *v0.4.0*: Removed optimizer, stable code.
 * 2016-03-15 *v0.3.0*: Filenames can be used as varnames.  
 * 2015-12-12 *v0.2.0*: Support for glslOptimizer
