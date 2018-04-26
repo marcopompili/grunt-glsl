@@ -1,5 +1,5 @@
-const fs = require('fs')
-const grunt = require('grunt')
+var fs = require('fs')
+var grunt = require('grunt')
 
 /*
   ======== A Handy Little Nodeunit Reference ========

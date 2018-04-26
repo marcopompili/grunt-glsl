@@ -6,10 +6,10 @@
  * Licensed under the MIT license.
  */
 
-const os = require('os')
-const directiveTag = "//#gljs"
-const inlineCommentPattern = /\/\/.*\n*/
-const headerCheck = /\s*\w+:\s*\w+,?/
+var os = require('os')
+var directiveTag = "//#gljs"
+var inlineCommentPattern = /\/\/.*\n*/
+var headerCheck = /\s*\w+:\s*\w+,?/
 
 if (typeof String.prototype.startsWith != 'function') {
   String.prototype.startsWith = function (str) {
@@ -27,7 +27,7 @@ function checkHeader(header) {
   if (!header.startsWith(directiveTag))
     return false
 
-  const header = header.substring(directiveTag.length, header.length)
+  var header = header.substring(directiveTag.length, header.length)
 
   if (!headerCheck.test(header))
     return false
@@ -36,11 +36,11 @@ function checkHeader(header) {
 }
 
 function parseHeader(header) {
-  const headerArray = header.substring(directiveTag.length, header.length).split(',')
+  var headerArray = header.substring(directiveTag.length, header.length).split(',')
   var gljs = {}
 
   headerArray.forEach(element => {
-    s = element.split(':').map(v => v.trim())
+    s = element.split(':').map(function(v) { v.trim() })
     gljs[s[0]] = s[1]
   })
 
@@ -58,10 +58,10 @@ module.exports = function (grunt) {
     var jsOutput = ''
     
     // Windows flag
-    const isWin = /^win/.test(os.platform())
+    var isWin = /^win/.test(os.platform())
 
     // Merge task-specific and/or target-specific options with these defaults.
-    const options = this.options({
+    var options = this.options({
       lineEndings: isWin ? '\r\n' : '\n',
       trim: false,
       stripComments: false,
@@ -69,25 +69,25 @@ module.exports = function (grunt) {
     })
 
     // Iterate over all specified file groups.
-    this.files.forEach(f => {
+    this.files.forEach(function(f) {
 
       // Concat specified files.
-      var src = f.src.filter(filepath => {
+      var src = f.src.filter(function(filepath) {
 
         // Warn on and remove invalid source files (if nonull was set).
-        const file_exists = grunt.file.exists(filepath)
+        var file_exists = grunt.file.exists(filepath)
 
         if (file_exists)
-          grunt.log.ok(`Source file ${filepath} found.`)
+          grunt.log.ok('Source file ' + filepath + ' found.')
         else
-          grunt.log.warn(`Source file ${filepath} not found.`)
+          grunt.log.warn('Source file ' + filepath + ' not found.')
 
         return file_exists
 
-      }).map(filepath => {
+      }).map(function(filepath) {
 
         // Read file source.
-        const src = grunt.util.normalizelf(grunt.file.read(filepath)).trim()
+        var src = grunt.util.normalizelf(grunt.file.read(filepath)).trim()
 
         if (src) {
           // Split source into array
@@ -95,41 +95,41 @@ module.exports = function (grunt) {
 
           // Trim lines
           if (options.trim)
-            shaderArrSrc = shaderArrSrc.map(line => line.trim())
+            shaderArrSrc = shaderArrSrc.map(function(line) { return line.trim() })
 
           // Strip empty lines
-          shaderArrSrc = shaderArrSrc.filter(line => line)
+          shaderArrSrc = shaderArrSrc.filter(function(line) { return line })
 
           if (!headerCheck.test(shaderArrSrc[0]))
             grunt.log.error('Source has an invalid header!')
 
           // Parse directive string into obj
-          const gljs = parseHeader(shaderArrSrc[0])
+          var gljs = parseHeader(shaderArrSrc[0])
           var shaderName = gljs.varname
           var shaderType = gljs.type
 
           // Strip directives for grunt-glsl
-          shaderArrSrc = shaderArrSrc.filter(line => !line.startsWith(directiveTag))
+          shaderArrSrc = shaderArrSrc.filter(function(line) { return !line.startsWith(directiveTag) })
 
           // If no shader name is given then sanitize filename
           if (!shaderName) {
             shaderName = sanitizedFilename(filepath)
-            grunt.log.ok(`Cannot find a valid variable name, using sanitzed filename: ${shaderName}`)
+            grunt.log.ok('Cannot find a valid variable name, using sanitzed filename: ' + shaderName)
           }
 
           // Remove comments
           if (options.stripComments)
-            shaderArrSrc = shaderArrSrc.filter(line => !inlineCommentPattern.test(line))
+            shaderArrSrc = shaderArrSrc.filter(function(line) { return !inlineCommentPattern.test(line) })
 
           // Oneline source
           if (options.oneString) {
-            jsOutput += `const ${shaderName} = '`
+            jsOutput += "var " + shaderName + " = '"
             jsOutput += shaderArrSrc.join('\\n')
             jsOutput += "';\n"
           // Arrary of strings (more readable)
           } else {
-            jsOutput += `const ${shaderName} = [`
-            jsOutput += shaderArrSrc.map(l => `\n'${l}'`).join(',')
+            jsOutput += "var " + shaderName + " = ["
+            jsOutput += shaderArrSrc.map(function(l) { return "\n'" + l + "'" }).join(',')
             jsOutput += "].join('\\n');\n"
           }
         }
@@ -139,7 +139,7 @@ module.exports = function (grunt) {
       grunt.file.write(f.dest, jsOutput)
 
       // Print a success message.
-      grunt.log.writeln(`File ${f.dest} created.`)
+      grunt.log.writeln('File ' + f.dest + ' created.')
     })
   })
 }
