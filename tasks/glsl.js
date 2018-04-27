@@ -95,10 +95,14 @@ module.exports = function (grunt) {
 
           // Trim lines
           if (options.trim)
-            shaderArrSrc = shaderArrSrc.map(function(line) { return line.trim() })
+            shaderArrSrc = shaderArrSrc.map(function(line) {
+              return line.trim()
+            })
 
           // Strip empty lines
-          shaderArrSrc = shaderArrSrc.filter(function(line) { return line })
+          shaderArrSrc = shaderArrSrc.filter(function(line) { 
+            return options.trim ? line : line.trim()
+          })
 
           if (!headerCheck.test(shaderArrSrc[0]))
             grunt.log.error('Source has an invalid header!')
@@ -109,7 +113,9 @@ module.exports = function (grunt) {
           var shaderType = gljs.type
 
           // Strip directives for grunt-glsl
-          shaderArrSrc = shaderArrSrc.filter(function(line) { return !line.startsWith(directiveTag) })
+          shaderArrSrc = shaderArrSrc.filter(function(line) {
+            return !line.startsWith(directiveTag)
+          })
 
           // If no shader name is given then sanitize filename
           if (!shaderName) {
@@ -119,7 +125,9 @@ module.exports = function (grunt) {
 
           // Remove comments
           if (options.stripComments)
-            shaderArrSrc = shaderArrSrc.filter(function(line) { return !inlineCommentPattern.test(line) })
+            shaderArrSrc = shaderArrSrc.filter(function(line) {
+              return !inlineCommentPattern.test(line)
+            })
 
           // Oneline source
           if (options.oneString) {
@@ -129,7 +137,9 @@ module.exports = function (grunt) {
           // Arrary of strings (more readable)
           } else {
             jsOutput += "var " + shaderName + " = ["
-            jsOutput += shaderArrSrc.map(function(l) { return "\n'" + l + "'" }).join(',')
+            jsOutput += shaderArrSrc.map(function(l) {
+              return "\n'" + l + "'"
+            }).join(',')
             jsOutput += "].join('\\n');\n"
           }
         }
