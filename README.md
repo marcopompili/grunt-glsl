@@ -1,7 +1,7 @@
 # Grunt-glsl
 > Translate GLSL shader files into javascript.
 
-[![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl) ![dependencies](https://david-dm.org/marcopompili/grunt-glsl.svg) ![version](https://img.shields.io/npm/v/grunt-glsl.svg) ![downloads](https://img.shields.io/npm/dt/grunt-glsl.svg)
+[![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl) ![deps](https://david-dm.org/marcopompili/grunt-glsl.svg) ![devdeps](https://david-dm.org/marcopompili/grunt-glsl/dev-status.svg) ![version](https://img.shields.io/npm/v/grunt-glsl.svg) ![downloads](https://img.shields.io/npm/dt/grunt-glsl.svg)
 
 [![NPM](https://nodei.co/npm/grunt-glsl.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/grunt-glsl/) [![NPM](https://nodei.co/npm-dl/grunt-glsl.png?months=3&height=3)](https://nodei.co/npm/grunt-glsl/)
 
@@ -10,7 +10,7 @@ First you have to set the headers for grunt-glsl in your shader files.
 
 For example a vertex shader file called vx.glsl:
 ```glsl
-//#gljs varname: 'vertex_shader_src'
+//#gljs varname: vertex_shader_src
 
 varying vec3 vertex;
 void main() {
@@ -21,7 +21,7 @@ void main() {
 
 Then a fragment shader file called fx.glsl:
 ```glsl
-//#gljs varname: 'fragment_shader_src'
+//#gljs varname: fragment_shader_src
 
 #extension GL_OES_standard_derivatives : enable
 varying vec3 vertex;
@@ -38,14 +38,11 @@ void main() {
 }
 ```
 
-The top header is basically CSON, apart from the first 5 characters that
-identify that the comment line is a header for grunt-glsl.
-
-The key 'varname' carries the value of the variable name for the
+The key `varname` carries the value of the variable name for the
 javascript file.
 
 ### From version 0.3.0
-If the key varname is not given, then the task tries to
+If the key `varname` is not given, then the task tries to
 sanitize the shader filename and use it as a variable name.
 
 For example: the filename test1_fx.glsl will become:
@@ -134,18 +131,24 @@ var fragment_shader_src = "#extension GL_OES_standard_derivatives : enable\nvary
 ### Options
 
 #### options.lineEndings
-Type: `String`
-Default value: `'\n'`
+- Type: `String`
+- Default value: `'\n'`
 
 This is the character used for line ending, shouldn't be necessary to override.
 Line endings are correctly set automatically.
 
 #### options.oneString
-Type: `Boolean`
-Default value: `false`
+- Type: `Boolean`
+- Default value: `false`
 
 If set instead of using an array, the whole source of the shader will be put
 on one string.
+
+#### options.trim
+- Type: `Boolean`
+- Default value: `false`
+
+Trims lines of shader source files.
 
 ### Usage Examples
 
@@ -175,6 +178,7 @@ grunt.initConfig({
     options: {
       lineEndings: '\n ',
       oneString: true,
+      trim: true
     },
     files: {
       'dest/shaders.js': ['src/vx.glsl', 'src/fx.glsl'],
@@ -198,4 +202,7 @@ using [Grunt](http://gruntjs.com/).
 * 2015-11-20 *v0.1.21*: Fix repository's infos.
 * 2015-11-09 *v0.1.1*: Work in progress somewhat working, lacks good docs.
 
-[paypal-donations]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZCEWXHNPK8JXN
+[paypal-donations]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZCEWXHNPK8JXN
+[deps]:https://david-dm.org/marcopompili/grunt-glsl
+[devdeps]:https://david-dm.org/marcopompili/grunt-glsl?type=dev
+[peerdeps]:https://david-dm.org/marcopompili/grunt-glsl?type=peer
