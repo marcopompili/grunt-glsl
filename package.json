@@ -1,7 +1,7 @@
 {
   "name": "grunt-glsl",
   "description": "Translate GLSL shader files into javascript.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "MIT",
   "homepage": "https://github.com/marcopompili/grunt-glsl",
   "author": {
@@ -26,10 +26,10 @@
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-nodeunit": "^1.0.0",
-    "grunt": "^0.4.0"
+    "grunt": "^1.0.2"
   },
   "peerDependencies": {
-    "grunt": ">=0.4.0"
+    "grunt": "^1.0.2"
   },
   "keywords": [
     "gruntplugin",
