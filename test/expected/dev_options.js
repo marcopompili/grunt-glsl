@@ -1,10 +1,10 @@
-var grid_vert = [
+var vertex_shader_src = [
 'varying vec3 vertex;',
 'void main() {',
 '  vertex = vec3(position.x * 3.0, position.y * 6.0, position.z * 3.0);',
 '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);',
 '}'].join('\n');
-var grid_frag = [
+var grid_fragment_src = [
 '#extension GL_OES_standard_derivatives : enable',
 'varying vec3 vertex;',
 'void main() {',
