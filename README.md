@@ -3,8 +3,6 @@
 
 [![PayPal](https://img.shields.io/badge/%24-paypal-f39c12.svg)][paypal-donations] [![Build Status](https://travis-ci.org/marcopompili/grunt-glsl.svg?branch=master)](https://travis-ci.org/marcopompili/grunt-glsl) ![deps](https://david-dm.org/marcopompili/grunt-glsl.svg) ![devdeps](https://david-dm.org/marcopompili/grunt-glsl/dev-status.svg) ![version](https://img.shields.io/npm/v/grunt-glsl.svg) ![downloads](https://img.shields.io/npm/dt/grunt-glsl.svg)
 
-[![NPM](https://nodei.co/npm/grunt-glsl.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/grunt-glsl/) [![NPM](https://nodei.co/npm-dl/grunt-glsl.png?months=3&height=3)](https://nodei.co/npm/grunt-glsl/)
-
 ## Setting up your GLSL source files
 First you have to set the headers for grunt-glsl in your shader files.
 
