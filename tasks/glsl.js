@@ -27,12 +27,9 @@ function checkHeader (header) {
   if (!header.startsWith(directiveTag))
     return false
 
-  const header = header.substring(directiveTag.length, header.length)
-
-  if (!headerCheck.test(header))
-    return false
-
-  return true
+  header = header.substring(directiveTag.length, header.length)
+  
+  return headerCheck.test(header)
 }
 
 function parseHeader (header) {
